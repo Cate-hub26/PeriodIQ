@@ -17,8 +17,10 @@ class PeriodEntry(models.Model):
     )
     start_date = models.DateField()
     
+    end_date = models.DateField(null=True, blank=True)
+    
     def __str__(self):
-        return f"{self.user.username} - {self.start_date}"
+        return f"{self.user.username} - {self.start_date} to {self.end_date}"
     
 class CycleStart(models.Model):
     user = models.ForeignKey(
