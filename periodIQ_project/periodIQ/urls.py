@@ -1,4 +1,5 @@
 from django.urls import path
+from cycle_summary import CycleSummaryView
 from .views import (
     PeriodEntriesListCreateAPIView,
     PeriodEntriesRetrieveUpdateDestroyAPIView,
@@ -21,4 +22,5 @@ urlpatterns = [
          CycleStartListAPIView.as_view(), 
          name='cyclestart-list-create'
     ),
+    path('cycle-summary/', CycleSummaryView.as_view(), name='cycle-summary')
 ]
