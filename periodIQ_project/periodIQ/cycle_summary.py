@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import PeriodEntry
-from utils.calculations import (
+from .utils.calculations import (
     calculate_period_duration, 
     calculate_cycle_lengths, 
     average_cycle_length

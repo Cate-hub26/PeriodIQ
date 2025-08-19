@@ -150,3 +150,32 @@ Returns a summary of the authenticated user's menstrual cycle data, including:
   "average_period_duration": 4.2,
   "entry_count": 12
 }
+
+## 🧪 consistency_check
+
+### Endpoint  
+`POST /consistency-check/`
+
+### Description  
+Analyzes the authenticated user's cycle data to detect irregular patterns and assess consistency. Returns a score and flags based on historical trends and defined thresholds.
+
+- Detects irregular cycles using variance and scoring logic  
+- Flags entries that deviate from expected patterns  
+- Uses historical data to compute consistency metrics
+
+### Authentication  
+- Required: Yes  
+- Method: Token-based
+
+### Permissions  
+- Only accessible to authenticated users (`IsAuthenticated`)
+
+---
+
+### Request Format
+
+#### Example (`POST`)
+```json
+{
+  "cycle_data": [28, 30, 27, 35, 29, 31]
+}

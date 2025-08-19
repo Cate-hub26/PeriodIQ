@@ -7,7 +7,10 @@ def predict_next_period(start_dates: List[str]) -> str:
     Dates should be in 'YYYY-MM-DD' format.
     """
     if len(start_dates) < 2:
-        return "Insufficient data"
+        return {
+            "error": "Insufficient data",
+            "required_minimum": 2
+        }
 
     sorted_dates = sorted([datetime.strptime(d, "%Y-%m-%d") for d in start_dates])
     cycle_lengths = [
@@ -19,4 +22,7 @@ def predict_next_period(start_dates: List[str]) -> str:
     last_date = sorted_dates[-1]
     predicted_date = last_date + timedelta(days=round(avg_length))
 
-    return predicted_date.strftime("%Y-%m-%d")
+    return {
+        "next_start_date": predicted_date.strftime("%Y-%m-%d"),
+        "average_cycle_length": round(avg_length, 1)
+    }
