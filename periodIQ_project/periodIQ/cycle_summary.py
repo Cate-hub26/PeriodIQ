@@ -13,7 +13,7 @@ class CycleSummaryView(APIView):
     
     def get(self, request):
         user = request.user
-        entries = PeriodEntry.objects.filter(user=user).ordered('start_date')
+        entries = PeriodEntry.objects.filter(user=user).order_by('start_date')
         
         if not entries.exists():
             return Response({
