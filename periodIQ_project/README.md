@@ -64,13 +64,14 @@ Login Request:
   - `email` (unique)
   - `typical_cycle_length` (integer, default 28)
 
-### PeriodEntry
+# PeriodEntry
 - Tracks individual period start dates.
 - Fields:
   - `user` - ForeignKey to `CustomUser` (owner)
   - `start_date` - Date of the period start
   - `end_date` - Date the period ends
-### CycleStart
+
+# CycleStart
 - Stores cycle statistics for a user.
 - Fields:
   - `user` - ForeignKey to `CustomUser`
@@ -118,7 +119,7 @@ This backend module provides core logic for menstrual cycle tracking and predict
 
 ## calculations.py
 
-### 🔹 `calculate_period_duration(start_date: str, end_date: str) -> int`
+###  `calculate_period_duration(start_date: str, end_date: str) -> int`
 
 Returns the duration of a period in days, inclusive of both start and end dates.
 
