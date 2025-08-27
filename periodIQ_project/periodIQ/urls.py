@@ -1,5 +1,5 @@
 from django.urls import path
-from .cycle_summary import CycleSummaryView
+from .cycle_summary_views import CycleSummaryView
 from .consistency_check_views import ConsistencyCheckView
 from .predictions_views import PredictionView
 from .views import (
@@ -12,7 +12,7 @@ from .views import (
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='custom-login'),
-    path('profile/', UserProfileView.as_view(), name='user-profile'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
     path(
         'period/', 
          PeriodEntriesListCreateAPIView.as_view(), 

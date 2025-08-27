@@ -16,8 +16,10 @@ class ConsistencyCheckView(APIView):
             )
             
         try:
-            parsed_dates = [datetime.strptime(ts, "%Y-%m-%d") for ts in timestamps]
-        except ValueError:
+            parsed_dates = [datetime.strptime(str(ts).strip(), "%Y-%m-%d") for ts in timestamps]
+        except ValueError as e:
+            print("Parsing error:", e)
+            
             return Response(
                 {"error": "Invalid date format. Use YYYY-MM-DD."},
                 status=status.HTTP_400_BAD_REQUEST

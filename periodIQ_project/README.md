@@ -1,14 +1,58 @@
 # PeriodIQ API Documentation
+PeriodIQ is a RESTful API designed to help users track, analyze, and predict menstrual cycles with personalized insights.
 
-## Authentication
+## 
 - All endpoints require authenticated access.
 - This project currently uses Django REST Framework’s `IsAuthenticated` permission.
-- Tokens must be sent in the request header.
-- Format depends on your auth setup:
-  - **JWT Authentication:**  
-    `Authorization: Bearer <your_token>`
+- Tokens must be sent in the requAuthenticationest header.
   - **DRF Token Authentication:**  
     `Authorization: Token <your_token>`
+  
+  ## API Endpoints for Authentication
+  `POST /api/registration/` - Register new user
+  Registration Request:
+  ## Body in postman
+  {
+  "username": "nzisa_dev",
+  "email": "nzisa@example.com",
+  "password": "StrongPass123!",
+  "typical_cycle_length": 28
+  }
+
+  ## Response
+  ```json
+  {
+  "user": {
+    "id": 1,
+    "username": "Cate_dev",
+    "email": "cate@example.com",
+    "typical_cycle_length": 28
+  },
+  "token": "abc123xyz456..."
+  }
+
+`POST /api/login/`- Login
+Login Request:
+  ## Body in postman
+  ```json
+  {
+  "username": "nzisa_dev",
+  "password": "StrongPass123!"
+  }
+
+  ## Response
+  {
+  "user": {
+    "id": 1,
+    "username": "nzisa_dev",
+    "email": "nzisa@example.com",
+    "typical_cycle_length": 28
+  },
+  "token": "abc123xyz456..."
+}
+
+`POST /api/profile/`- User profile
+- Returns the profile of the authenticated user. 
 
 ---
 
@@ -37,20 +81,20 @@
 
 ---
 
-## API Endpoints
+## Other API Endpoints
 
 ### 1. **List & Create Period Entries**
-**GET** `/period/`  
+**GET** `/api/period/`  
 Returns all period entries for the authenticated user.
 
-**POST** `/period/`  
+**POST** `/api/period/`  
 Creates a new period entry for the authenticated user.
 
 ### 2. **Retrieve, Update & Delete a Period Entry**
-**GET** `/period/<id>/`  
+**GET** `/api/period/<id>/`  
 Retrieves a specific period entry by its ID.
 
-**PUT** `/period/<id>/`  
+**PUT** `/api/period/<id>/`  
 Updates all fields of a specific period entry.  
 
 **POST body example**:
@@ -123,7 +167,7 @@ print(next_period)  # Output: "2025-09-23"
 ## cycle_summary
 
 ### Endpoint
-`GET /cycle-summary/`
+`GET /api/cycle-summary/`
 
 ### Description
 Returns a summary of the authenticated user's menstrual cycle data, including:
@@ -141,7 +185,7 @@ Returns a summary of the authenticated user's menstrual cycle data, including:
 
 ---
 
-### esponse Format
+### Response Format
 
 #### success (`200 OK`)
 ```json
@@ -151,13 +195,13 @@ Returns a summary of the authenticated user's menstrual cycle data, including:
   "entry_count": 12
 }
 
-## 🧪 consistency_check
+## consistency_check
 
 ### Endpoint  
-`POST /consistency-check/`
+`POST /api/consistency-check/`
 
 ### Description  
-Analyzes the authenticated user's cycle data to detect irregular patterns and assess consistency. Returns a score and flags based on historical trends and defined thresholds.
+Analyzes the authenticated user's timestamps to detect irregular patterns and assess consistency. Returns a score and flags based on historical trends and defined thresholds.
 
 - Detects irregular cycles using variance and scoring logic  
 - Flags entries that deviate from expected patterns  
@@ -179,3 +223,62 @@ Analyzes the authenticated user's cycle data to detect irregular patterns and as
 {
   "cycle_data": [28, 30, 27, 35, 29, 31]
 }
+
+GET /api/period/<id>/
+Retrieves a specific entry.
+PUT /api/period/<id>/
+Updates all fields of a specific entry.
+PATCH /api/period/<id>/  
+Partially updates a period entry.
+Example:
+{
+  "end_date": "2025-08-20"
+}
+
+### Prediction Endpoints
+POST /api/predict/
+Predicts next start date from manually provided cycle lengths.
+Request:
+{
+  "cycle_data": [28, 30, 27]
+}
+
+
+Response:
+{
+  "next_period": "2025-09-22"
+}
+
+### Consistency Check Endpoint
+
+**POST** `/api/consistency-check/`  
+Requires: Token Authentication  
+Payload:
+```json
+{
+  "timestamps": ["YYYY-MM-DD", "YYYY-MM-DD", ...]
+}
+Example:
+Using postman:
+```json
+{
+  "timestamps": [
+    "2025-07-01",
+    "2025-07-29",
+    "2025-08-26",
+    "2025-09-23",
+    "2025-10-21"
+  ]
+}
+
+Response:
+{
+  "status": "ok",
+  "average_cycle": 28.0,
+  "min_cycle": 28,
+  "max_cycle": 29,
+  "irregular_flag": false
+}
+
+---
+

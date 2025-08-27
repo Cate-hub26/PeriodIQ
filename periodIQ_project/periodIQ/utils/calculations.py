@@ -30,3 +30,6 @@ def average_cycle_length(cycle_lengths: List[int]) -> float:
     if not cycle_lengths:
         return 0.0
     return round(sum(cycle_lengths) / len(cycle_lengths), 2)
+
+def detect_irregularity(cycle_lengths):
+    return (max(cycle_lengths) - min(cycle_lengths)) > 5

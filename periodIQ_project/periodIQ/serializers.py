@@ -30,7 +30,7 @@ class PeriodEntrySerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only=True)
     class Meta:
         model = PeriodEntry
-        fields = ['user', 'start_date']
+        fields = ['user', 'start_date', 'end_date']
         
 class CycleStartSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only=True)
@@ -43,3 +43,11 @@ class CycleStartSerializer(serializers.ModelSerializer):
                   'max_cycle', 
                   'irregular_flag'
         ]
+        
+class ConsistencyResultSerializer(serializers.Serializer):
+    status = serializers.CharField()
+    average_gap = serializers.FloatField(allow_null=True)
+    min_gap = serializers.FloatField(allow_null=True)
+    max_gap = serializers.FloatField(allow_null=True)
+    std_dev = serializers.FloatField(allow_null=True)
+    is_consistent = serializers.BooleanField(allow_null=True)

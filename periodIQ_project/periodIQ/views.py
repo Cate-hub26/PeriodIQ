@@ -7,6 +7,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import PeriodEntry, CycleStart
+from rest_framework.generics import ListCreateAPIView
 from .serializers import (
     PeriodEntrySerializer, 
     CycleStartSerializer, 
@@ -47,13 +48,17 @@ class CustomLoginView(ObtainAuthToken):
         })
 
         
-
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        serializer = CustomUserSerializer(request.user)
-        return Response(serializer.data)
+        user = request.user
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "typical_cycle_length": user.typical_cycle_length
+        })
         
 class PeriodEntriesListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = PeriodEntrySerializer
@@ -72,12 +77,16 @@ class PeriodEntriesRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAP
     def get_queryset(self):
         return PeriodEntry.objects.filter(user=self.request.user)
 
-class CycleStartListAPIView(generics.ListAPIView):
+class CycleStartListAPIView(ListCreateAPIView):
+    queryset = CycleStart.objects.all()
     serializer_class = CycleStartSerializer
     permission_classes = [IsAuthenticated]
-    
+
     def get_queryset(self):
-        return CycleStart.objects.filter(user=self.request.user)
+        return CycleStart.objects.filter(user=self.request.user).order_by('-id')
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     
     
     

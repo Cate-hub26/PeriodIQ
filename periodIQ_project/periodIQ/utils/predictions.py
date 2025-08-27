@@ -1,28 +1,26 @@
 from datetime import datetime, timedelta
-from typing import List
+from typing import List, Dict, Union
 
-def predict_next_period(start_dates: List[str]) -> str:
+def predict_next_period(cycle_data: List[int]) -> Dict[str, Union[str, float]]:
     """
     Predicts the next period start date based on average cycle length.
-    Dates should be in 'YYYY-MM-DD' format.
+    
+    Args:
+        cycle_data (List[int]): List of cycle lengths in days.
+    
+    Returns:
+        Dict[str, Union[str, float]]: Predicted next start date and average cycle length.
+    
     """
-    if len(start_dates) < 2:
-        return {
-            "error": "Insufficient data",
-            "required_minimum": 2
-        }
+    
+    if not cycle_data or not all(isinstance(d, int) and d > 0 for d in cycle_data):
+        return {"error": "Insufficient data"}
 
-    sorted_dates = sorted([datetime.strptime(d, "%Y-%m-%d") for d in start_dates])
-    cycle_lengths = [
-        (sorted_dates[i] - sorted_dates[i - 1]).days
-        for i in range(1, len(sorted_dates))
-    ]
-
-    avg_length = sum(cycle_lengths) / len(cycle_lengths)
-    last_date = sorted_dates[-1]
-    predicted_date = last_date + timedelta(days=round(avg_length))
+    average_cycle = sum(cycle_data) / len(cycle_data)
+    today = datetime.today()
+    predicted_date = today + timedelta(days=round(average_cycle))
 
     return {
-        "next_start_date": predicted_date.strftime("%Y-%m-%d"),
-        "average_cycle_length": round(avg_length, 1)
+        "next_period": predicted_date.strftime("%Y-%m-%d"),
     }
+    

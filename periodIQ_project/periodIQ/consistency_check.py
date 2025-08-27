@@ -2,6 +2,9 @@ from datetime import datetime
 from statistics import mean, stdev
 from typing import List, Dict
 from .utils.calculations import calculate_cycle_lengths
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Thresholds
 
@@ -21,11 +24,10 @@ def check_consistency(timestamps: List[datetime]) -> Dict:
     if len(timestamps) < MIN_EVENTS:
         return {
             "status": "no_data",
-            "average_gap": None,
-            "min_gap": None,
-            "max_gap": None,
-            "std_dev": None,
-            "is_consistent": None
+            "average_cycle": None,
+            "min_cycle": None,
+            "max_cycle": None,
+            "irregular_flag": None
         }
     
      # Convert datetime objects to dicts for reuse
@@ -35,11 +37,10 @@ def check_consistency(timestamps: List[datetime]) -> Dict:
     if len(gaps) < MIN_EVENTS - 1:
         return {
             "status": "insufficient_data",
-            "average_gap": None,
-            "min_gap": None,
-            "max_gap": None,
-            "std_dev": None,
-            "is_consistent": None
+            "average_cycle": None,
+            "min_cycle": None,
+            "max_cycle": None,
+            "irregular_flag": None
         }
     
     avg_gap = mean(gaps)
@@ -47,15 +48,15 @@ def check_consistency(timestamps: List[datetime]) -> Dict:
     max_gap = max(gaps)
     min_gap = min(gaps)
     
-    is_consistent = std_dev <= MAX_STD_DEV and max_gap <= MAX_GAP
+    gap_range = max_gap - min_gap
+    irregular_flag = not (std_dev <= MAX_STD_DEV and gap_range <= MAX_GAP)
     
     return {
         "status": "ok",
-        "average_gap": avg_gap,
-        "min_gap": min_gap,
-        "max_gap": max_gap,
-        "std_dev": std_dev,
-        "is_consistent": is_consistent
+        "average_cycle": avg_gap,
+        "min_cycle": min_gap,
+        "max_cycle": max_gap,
+        "irregular_flag": irregular_flag
     }
 
         
