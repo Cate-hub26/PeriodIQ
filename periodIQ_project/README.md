@@ -13,9 +13,9 @@ PeriodIQ is a RESTful API designed to help users track, analyze, and predict men
   Registration Request:
   ## Body in postman
   {
-  "username": "nzisa_dev",
-  "email": "nzisa@example.com",
-  "password": "StrongPass123!",
+  "username": "CatNzisa_dev",
+  "email": "catnzisa@example.com",
+  "password": "StrongPass124!",
   "typical_cycle_length": 28
   }
 
@@ -24,8 +24,8 @@ PeriodIQ is a RESTful API designed to help users track, analyze, and predict men
   {
   "user": {
     "id": 1,
-    "username": "Cate_dev",
-    "email": "cate@example.com",
+    "username": "CatNzisa_dev",
+    "email": "catnzisa@example.com",
     "typical_cycle_length": 28
   },
   "token": "abc123xyz456..."
@@ -36,16 +36,16 @@ Login Request:
   ## Body in postman
   ```json
   {
-  "username": "nzisa_dev",
-  "password": "StrongPass123!"
+  "username": "CatNzisa_dev",
+  "password": "StrongPass124!"
   }
 
   ## Response
   {
   "user": {
     "id": 1,
-    "username": "nzisa_dev",
-    "email": "nzisa@example.com",
+    "username": "CateNzisa_dev",
+    "email": "catenzisa@example.com",
     "typical_cycle_length": 28
   },
   "token": "abc123xyz456..."
@@ -237,7 +237,7 @@ Example:
 }
 
 ### Prediction Endpoints
-POST /api/predict/
+POST /api/prediction/
 Predicts next start date from manually provided cycle lengths.
 Request:
 {
@@ -266,7 +266,7 @@ Using postman:
   "timestamps": [
     "2025-07-01",
     "2025-07-29",
-    "2025-08-26",
+    "2025-08-25",
     "2025-09-23",
     "2025-10-21"
   ]
