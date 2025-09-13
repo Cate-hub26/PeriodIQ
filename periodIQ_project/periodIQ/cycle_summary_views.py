@@ -6,7 +6,7 @@ from .utils.calculations import (
     calculate_period_duration,
     calculate_cycle_lengths,
     average_cycle_length,
-    detect_irregularity  # optional, if you add this helper
+    detect_irregularity
 )
 
 class CycleSummaryView(APIView):

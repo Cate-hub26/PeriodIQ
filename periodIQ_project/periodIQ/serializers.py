@@ -25,12 +25,27 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id', 'email', 'username', 'typical_cycle_length']
         read_only_fields = ['id', 'email', 'username', 'typical_cycle_length']
+        
+    def validate_typical_cycle_length(self, value):
+        if not 21 <= value <= 35:
+            raise serializers.ValidationError(
+                "Cycle length must be between 21 and 35."
+            )
+        return value
+            
              
 class PeriodEntrySerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only=True)
     class Meta:
         model = PeriodEntry
-        fields = ['user', 'start_date', 'end_date']
+        fields = ['user', 'start_date', 'end_date'] 
+        
+    def  validate(self, data):
+        if data.get('end_date') and data['end_date'] < data['start_date']:
+            raise serializers.ValidationError(
+                "End date must come after start date."
+            )
+        return data
         
 class CycleStartSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only=True)

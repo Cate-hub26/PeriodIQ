@@ -4,7 +4,7 @@ PeriodIQ is a RESTful API designed to help users track, analyze, and predict men
 ## 
 - All endpoints require authenticated access.
 - This project currently uses Django REST Framework’s `IsAuthenticated` permission.
-- Tokens must be sent in the requAuthenticationest header.
+- - Tokens must be sent in the request header using the `Authorization` field.
   - **DRF Token Authentication:**  
     `Authorization: Token <your_token>`
   
@@ -104,10 +104,11 @@ Updates all fields of a specific period entry.
   "start_date": "2025-08-15"
 }
 
-## PeriodIQ Backend Calculations
-
-This backend module provides core logic for menstrual cycle tracking and prediction. It includes utilities for calculating period durations, cycle lengths, average cycle length, and predicting the next expected period.
-
+## Backend Flow
+1. User submits period entries.
+2. System calculates cycle lengths.
+3. Summary and prediction endpoints analyze trends.
+4. Consistency check flags irregular patterns.
 ---
 
 ## Module Structure
@@ -282,4 +283,11 @@ Response:
 }
 
 ---
+
+## Setup Instructions
+1. Clone the repo
+2. Create a virtual environment
+3. Install dependencies: `pip install -r requirements.txt`
+4. Run migrations: `python manage.py migrate`
+5. Start server: `python manage.py runserver`
 

@@ -15,7 +15,7 @@ class CycleSummaryViewTests(APITestCase):
         self.client.force_authenticate(user=self.user)
         self.url = reverse('cycle-summary')  
 
-        # Create sample entries
+        # Sample entries
         PeriodEntry.objects.create(
             user=self.user,
             start_date=timezone.now().date() - timedelta(days=30),
