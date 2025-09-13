@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-eghgp$ka8!w01-+xnoioo!115=k8)x9f&^kk&mlp0&)ine$lmi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['PeriodIQ.onrender.com']
+ALLOWED_HOSTS = ['periodiq.onrender.com']
 
 
 # Application definition
