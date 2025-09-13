@@ -78,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'periodIQ_project.wsgi.application'
+WSGI_APPLICATION = 'periodIQ_project.periodIQ_project.wsgi.application'
 
 
 # Database
