@@ -51,7 +51,7 @@ Login Request:
   "token": "abc123xyz456..."
 }
 
-`POST /api/profile/`- User profile
+`GET /api/profile/`- User profile
 - Returns the profile of the authenticated user. 
 
 ---
