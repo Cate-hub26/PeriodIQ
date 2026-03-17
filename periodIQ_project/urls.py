@@ -16,8 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Welcome to PeriodIQ!")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('periodIQ.urls'))
+    path('api/', include('periodIQ.urls')),
+    path('', home),  # root URL,
+    path('admin/', admin.site.urls)
 ]
+
+def home(request):
+    return HttpResponse("Welcome to PeriodIQ!")
